@@ -2,15 +2,9 @@ import random
 
 
 def play():
-    print("**************************")
-    print("***Welcome to the Game!***")
-    print("**************************")
+    show_welcome_message()
 
-    language = -1  # not valid
-    while language < 1 or language > 2:
-        language = int(input("Choose your language:\n(1) English\n(2) Portuguese\n"))
-        if language < 1 or language > 2:
-            print("Invalid option!")
+    language = choose_language()
 
     words = load_words("english" if language == 1 else "portuguese")
 
@@ -41,12 +35,30 @@ def play():
 
         print(correct_letters)
 
+    show_end_game_message(loose, win)
+
+
+def show_end_game_message(loose, win):
     if win:
         print("You win! :)")
     elif loose:
         print("You loose! :(")
-
     print("End of the game")
+
+
+def choose_language():
+    language = -1  # not valid
+    while language < 1 or language > 2:
+        language = int(input("Choose your language:\n(1) English\n(2) Portuguese\n"))
+        if language < 1 or language > 2:
+            print("Invalid option!")
+    return language
+
+
+def show_welcome_message():
+    print("**************************")
+    print("***Welcome to the Game!***")
+    print("**************************")
 
 
 def load_words(language):
