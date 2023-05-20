@@ -1,8 +1,9 @@
 import random
+import screen
 
 
 def play():
-    show_welcome_message()
+    screen.show_welcome_message()
 
     language = choose_language()
 
@@ -11,6 +12,7 @@ def play():
     loose = False
     win = False
     errors = 0
+    max_errors = 7
 
     secret_word = choose_secret_word(words)
 
@@ -29,20 +31,21 @@ def play():
                 index += 1
         else:
             errors += 1
+            screen.show_errors(errors)
 
-        loose = errors == len(secret_word)
+        loose = errors == max_errors
         win = "_" not in correct_letters
 
         print(correct_letters)
 
-    show_end_game_message(loose, win)
+    show_end_game_message(loose, win, secret_word)
 
 
-def show_end_game_message(loose, win):
+def show_end_game_message(loose, win, secret_word):
     if win:
-        print("You win! :)")
+        screen.show_win_message()
     elif loose:
-        print("You loose! :(")
+        screen.show_loose_message(secret_word)
     print("End of the game")
 
 
@@ -53,12 +56,6 @@ def choose_language():
         if language < 1 or language > 2:
             print("Invalid option!")
     return language
-
-
-def show_welcome_message():
-    print("**************************")
-    print("***Welcome to the Game!***")
-    print("**************************")
 
 
 def load_words(language):
